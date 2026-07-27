@@ -3,36 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>digitalskillzonebyzain</title>
-    <!-- Tailwind CSS -->
+    <title>Zain's Digital Zone | Premium Hub</title>
+    
+    <!-- Google Fonts: Inter & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
         body {
-            background-color: #0d1117;
-            color: #c9d1d9;
-            font-family: 'Fira Code', Consolas, 'Courier New', monospace, system-ui;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-                linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)),
-                url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1920&auto=format&fit=crop');
-            background-size: cover;
-            background-attachment: fixed;
+            font-family: 'Inter', sans-serif;
+            background-color: #090d16;
+            color: #f1f5f9;
+        }
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: 'Poppins', sans-serif;
         }
 
         .glass-card {
-            background: rgba(22, 27, 34, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(48, 54, 61, 0.8);
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
         }
 
         .glow-btn {
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+            background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
             transition: all 0.3s ease;
         }
+        
         .glow-btn:hover {
-            box-shadow: 0 0 25px rgba(99, 102, 241, 0.8);
             transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.7);
         }
 
         @media print {
@@ -44,133 +55,143 @@
                 border: none !important; box-shadow: none !important;
             }
         }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #090d16; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
 
-    <!-- WELCOME OVERLAY -->
-    <div id="welcomeScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-slate-950/95 backdrop-blur-xl p-4 text-center">
-        <div class="max-w-2xl p-8 rounded-3xl glass-card border border-indigo-500/30 shadow-2xl">
-            <div class="inline-block p-4 rounded-2xl bg-indigo-600/20 text-indigo-400 mb-6 border border-indigo-500/40">
-                <span class="text-4xl">👨‍💻</span>
+    <!-- WELCOME OVERLAY SCREEN WITH USER IMAGE -->
+    <div id="welcomeScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#090d16]/95 backdrop-blur-2xl p-4 text-center">
+        <div class="max-w-2xl p-8 md:p-12 rounded-3xl glass-card border border-indigo-500/30 flex flex-col items-center">
+            
+            <!-- PROFILE IMAGE CONTAINER -->
+            <div class="relative mb-6">
+                <div class="w-28 h-28 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-indigo-500/50 shadow-[0_0_25px_rgba(99,102,241,0.5)]">
+                    <img src="profile.jpg" alt="Owner Profile" class="w-full h-full object-cover">
+                </div>
             </div>
+
             <h1 class="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-500 mb-4 tracking-tight">
                 Welcome to Zain's Digital Zone
             </h1>
-            <p class="text-gray-400 text-sm md:text-base mb-8 max-w-lg mx-auto">
+            <p class="text-slate-400 text-sm md:text-base mb-8 max-w-lg mx-auto leading-relaxed">
                 Explore 100+ shortcuts, 500+ fonts, Pro CV builder, 20+ Free AI tools & Digital Marketing courses.
             </p>
-            <button onclick="enterZone()" class="glow-btn bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg px-8 py-4 rounded-2xl transition duration-300">
+            <button onclick="enterZone()" class="glow-btn text-white font-bold text-lg px-8 py-4 rounded-2xl cursor-pointer">
                 🚀 Enter Digital Zone
             </button>
         </div>
     </div>
 
-    <!-- MAIN APP CONTENT -->
+    <!-- MAIN DASHBOARD CONTENT -->
     <div id="mainContent" class="hidden flex-col min-h-screen">
-
+        
         <!-- HEADER -->
-        <header class="glass-card sticky top-0 z-40 border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+        <header class="border-b border-slate-800/80 bg-[#090d16]/80 sticky top-0 z-40 backdrop-blur-md px-6 py-4 flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <span class="text-2xl">⚡</span>
                 <div>
-                    <h1 class="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
+                    <h1 class="font-heading text-lg md:text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-indigo-400">
                         Digital Marketing Zone By Zain
                     </h1>
-                    <p class="text-xs text-gray-400">Owner: <span class="text-indigo-400 font-semibold">Ali Zain</span></p>
+                    <p class="text-[10px] text-slate-400">Owner: <span class="text-indigo-400 font-semibold">Ali Zain</span></p>
                 </div>
             </div>
-            <button onclick="showSection('homeSection')" class="text-xs md:text-sm bg-gray-800 hover:bg-gray-700 text-gray-300 px-4 py-2 rounded-xl border border-gray-700 transition">
+            <button onclick="showSection('homeSection')" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl border border-slate-700 transition">
                 🏠 Main Menu
             </button>
         </header>
 
-        <!-- CONTENT AREA -->
-        <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6">
+        <!-- MAIN CONTENT AREA -->
+        <main class="max-w-7xl w-full mx-auto p-4 md:p-6 flex-grow">
 
-            <!-- MAIN MENU -->
+            <!-- MAIN MENU (HOME) -->
             <div id="homeSection" class="space-y-8">
                 <div class="text-center py-6">
-                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2">Where do you want to go?</h2>
-                    <p class="text-gray-400 text-sm">Select an option below to open its dedicated workspace.</p>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-2 font-heading">Where do you want to go?</h2>
+                    <p class="text-slate-400 text-sm">Select an option below to open its dedicated workspace.</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div onclick="showSection('aiToolsSection')" class="glass-card p-6 rounded-2xl border border-gray-800 hover:border-pink-500/50 cursor-pointer transition transform hover:-translate-y-1">
+                    <div onclick="showSection('aiToolsSection')" class="glass-card p-6 rounded-2xl cursor-pointer transition hover:-translate-y-1">
                         <div class="text-3xl mb-4">🤖</div>
-                        <h3 class="text-lg font-bold text-white mb-2">20+ Free AI Tools</h3>
-                        <p class="text-xs text-gray-400 mb-4">Top free AI tools for text, images, coding, audio & video generation.</p>
+                        <h3 class="text-lg font-bold text-white mb-2 font-heading">20+ Free AI Tools</h3>
+                        <p class="text-xs text-slate-400 mb-4">Top free AI tools for text, images, coding, audio & video generation.</p>
                         <span class="text-xs text-pink-400 font-semibold flex items-center gap-1">Explore AI Directory &rarr;</span>
                     </div>
 
-                    <div onclick="showSection('shortcutsSection')" class="glass-card p-6 rounded-2xl border border-gray-800 hover:border-cyan-500/50 cursor-pointer transition transform hover:-translate-y-1">
+                    <div onclick="showSection('shortcutsSection')" class="glass-card p-6 rounded-2xl cursor-pointer transition hover:-translate-y-1">
                         <div class="text-3xl mb-4">🖥️</div>
-                        <h3 class="text-lg font-bold text-white mb-2">100+ Computer Shortcuts</h3>
-                        <p class="text-xs text-gray-400 mb-4">Master list featuring Ctrl, Win & Alt key combinations.</p>
+                        <h3 class="text-lg font-bold text-white mb-2 font-heading">100+ Computer Shortcuts</h3>
+                        <p class="text-xs text-slate-400 mb-4">Master list featuring Ctrl, Win & Alt key combinations.</p>
                         <span class="text-xs text-cyan-400 font-semibold flex items-center gap-1">Open Keys Library &rarr;</span>
                     </div>
 
-                    <div onclick="showSection('fontSection')" class="glass-card p-6 rounded-2xl border border-gray-800 hover:border-purple-500/50 cursor-pointer transition transform hover:-translate-y-1">
+                    <div onclick="showSection('fontSection')" class="glass-card p-6 rounded-2xl cursor-pointer transition hover:-translate-y-1">
                         <div class="text-3xl mb-4">🔤</div>
-                        <h3 class="text-lg font-bold text-white mb-2">500+ Font Converter</h3>
-                        <p class="text-xs text-gray-400 mb-4">Convert text into 500+ stylish Unicode font variations.</p>
+                        <h3 class="text-lg font-bold text-white mb-2 font-heading">500+ Font Converter</h3>
+                        <p class="text-xs text-slate-400 mb-4">Convert text into 500+ stylish Unicode font variations.</p>
                         <span class="text-xs text-purple-400 font-semibold flex items-center gap-1">Open Converter &rarr;</span>
                     </div>
 
-                    <div onclick="showSection('cvSection')" class="glass-card p-6 rounded-2xl border border-gray-800 hover:border-indigo-500/50 cursor-pointer transition transform hover:-translate-y-1">
+                    <div onclick="showSection('cvSection')" class="glass-card p-6 rounded-2xl cursor-pointer transition hover:-translate-y-1">
                         <div class="text-3xl mb-4">📄</div>
-                        <h3 class="text-lg font-bold text-white mb-2">Advanced CV Builder</h3>
-                        <p class="text-xs text-gray-400 mb-4">Create resumes with theme customization, photo, projects & certs.</p>
+                        <h3 class="text-lg font-bold text-white mb-2 font-heading">Advanced CV Builder</h3>
+                        <p class="text-xs text-slate-400 mb-4">Create resumes with theme customization, photo, projects & certs.</p>
                         <span class="text-xs text-indigo-400 font-semibold flex items-center gap-1">Create Resume &rarr;</span>
                     </div>
 
-                    <div onclick="showSection('marketingSection')" class="glass-card p-6 rounded-2xl border border-gray-800 hover:border-emerald-500/50 cursor-pointer transition transform hover:-translate-y-1">
+                    <div onclick="showSection('marketingSection')" class="glass-card p-6 rounded-2xl cursor-pointer transition hover:-translate-y-1">
                         <div class="text-3xl mb-4">📹</div>
-                        <h3 class="text-lg font-bold text-white mb-2">Digital Marketing Lectures</h3>
-                        <p class="text-xs text-gray-400 mb-4">Free masterclass lectures on SEO, SMM, Content & Ad Campaigns.</p>
+                        <h3 class="text-lg font-bold text-white mb-2 font-heading">Digital Marketing Lectures</h3>
+                        <p class="text-xs text-slate-400 mb-4">Free masterclass lectures on SEO, SMM, Content & Ad Campaigns.</p>
                         <span class="text-xs text-emerald-400 font-semibold flex items-center gap-1">Watch Lectures &rarr;</span>
                     </div>
                 </div>
             </div>
 
-            <!-- INTERFACE 0: 20+ FREE AI TOOLS DIRECTORY -->
+            <!-- SECTION 1: 20+ FREE AI TOOLS -->
             <div id="aiToolsSection" class="hidden space-y-6">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6 rounded-2xl">
                     <div>
-                        <h2 class="text-2xl font-bold text-pink-400">🤖 Top 20+ Free AI Tools Directory</h2>
-                        <p class="text-xs text-gray-400 mt-1">Handpicked AI tools for writing, image creation, coding, video & audio.</p>
+                        <h2 class="text-2xl font-bold text-pink-400 font-heading">🤖 Top 20+ Free AI Tools Directory</h2>
+                        <p class="text-xs text-slate-400 mt-1">Handpicked AI tools for writing, image creation, coding, video & audio.</p>
                     </div>
-                    <input type="text" id="searchAITools" onkeyup="filterAITools()" placeholder="Search AI tool or category..." class="bg-gray-900 border border-gray-700 text-sm rounded-xl p-3 w-full md:w-80 focus:outline-none focus:border-pink-500">
+                    <input type="text" id="searchAITools" onkeyup="filterAITools()" placeholder="Search AI tool or category..." class="bg-slate-900 border border-slate-700 text-sm rounded-xl p-3 w-full md:w-80 focus:outline-none focus:border-pink-500">
                 </div>
 
                 <div id="aiToolsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- JS Dynamic Render -->
+                    <!-- Dynamic Render -->
                 </div>
             </div>
 
-            <!-- INTERFACE 1: 100+ SHORTCUT KEYS -->
+            <!-- SECTION 2: 100+ SHORTCUT KEYS -->
             <div id="shortcutsSection" class="hidden space-y-6">
                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 glass-card p-6 rounded-2xl">
                     <div>
-                        <h2 class="text-2xl font-bold text-cyan-400">🖥️ Master Computer Shortcut Keys (100+)</h2>
-                        <p class="text-xs text-gray-400 mt-1">Complete reference list for Ctrl, Win, Alt & Function combinations.</p>
+                        <h2 class="text-2xl font-bold text-cyan-400 font-heading">🖥️ Master Computer Shortcut Keys (100+)</h2>
+                        <p class="text-xs text-slate-400 mt-1">Complete reference list for Ctrl, Win, Alt & Function combinations.</p>
                     </div>
-                    <input type="text" id="searchKeys" onkeyup="filterKeys()" placeholder="Search shortcut (e.g., Ctrl+C, Win+L)..." class="bg-gray-900 border border-gray-700 text-sm rounded-xl p-3 w-full md:w-80 focus:outline-none focus:border-cyan-500">
+                    <input type="text" id="searchKeys" onkeyup="filterKeys()" placeholder="Search shortcut (e.g., Ctrl+C, Win+L)..." class="bg-slate-900 border border-slate-700 text-sm rounded-xl p-3 w-full md:w-80 focus:outline-none focus:border-cyan-500">
                 </div>
 
                 <div class="glass-card p-6 rounded-2xl">
                     <div id="keysMasterList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
-                        <!-- JS Dynamic Render -->
+                        <!-- Dynamic Render -->
                     </div>
                 </div>
             </div>
 
-            <!-- INTERFACE 2: 500+ FONT GENERATOR -->
+            <!-- SECTION 3: 500+ FONT GENERATOR -->
             <div id="fontSection" class="hidden space-y-6">
                 <div class="glass-card p-6 rounded-2xl">
-                    <h2 class="text-2xl font-bold text-purple-400 mb-2">🔤 500+ Unicode Stylish Font Generator</h2>
-                    <p class="text-xs text-gray-400 mb-4">Type text below to generate 500+ unique font styles instantly.</p>
-                    <textarea id="fontInput" oninput="convertFonts()" rows="3" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl p-4 focus:outline-none focus:border-purple-500 text-sm" placeholder="Type text here to generate 500+ styles..."></textarea>
+                    <h2 class="text-2xl font-bold text-purple-400 mb-2 font-heading">🔤 500+ Unicode Stylish Font Generator</h2>
+                    <p class="text-xs text-slate-400 mb-4">Type text below to generate 500+ unique font styles instantly.</p>
+                    <textarea id="fontInput" oninput="convertFonts()" rows="3" class="w-full bg-slate-900 border border-slate-700 text-white rounded-xl p-4 focus:outline-none focus:border-purple-500 text-sm" placeholder="Type text here to generate 500+ styles..."></textarea>
                 </div>
 
                 <div id="fontGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -178,14 +199,14 @@
                 </div>
             </div>
 
-            <!-- INTERFACE 3: ADVANCED CV BUILDER -->
+            <!-- SECTION 4: ADVANCED CV BUILDER -->
             <div id="cvSection" class="hidden space-y-6">
                 <div class="glass-card p-6 rounded-2xl flex flex-wrap items-center justify-between gap-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-indigo-400">📄 Professional CV Builder Pro</h2>
-                        <p class="text-xs text-gray-400">Custom theme colors, fonts, dynamic projects, and PDF export.</p>
+                        <h2 class="text-2xl font-bold text-indigo-400 font-heading">📄 Professional CV Builder Pro</h2>
+                        <p class="text-xs text-slate-400">Custom theme colors, fonts, dynamic projects, and PDF export.</p>
                     </div>
-                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2">
+                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 cursor-pointer">
                         🖨️ Download PDF / Print
                     </button>
                 </div>
@@ -193,12 +214,12 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <!-- Form Inputs -->
                     <div class="glass-card p-6 rounded-2xl space-y-4 max-h-[800px] overflow-y-auto pr-2">
-                        <div class="bg-gray-900/90 p-4 rounded-xl border border-gray-800 space-y-3">
-                            <h3 class="font-bold text-cyan-400 text-xs uppercase tracking-wider">🎨 CV Customizer Options</h3>
+                        <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 space-y-3">
+                            <h3 class="font-bold text-cyan-400 text-xs uppercase tracking-wider font-heading">🎨 CV Customizer Options</h3>
                             <div class="grid grid-cols-2 gap-3 text-xs">
                                 <div>
-                                    <label class="block text-gray-400 mb-1">Theme Accent Color</label>
-                                    <select id="cvThemeColor" onchange="updateCVTheme()" class="bg-gray-800 border border-gray-700 text-white rounded-lg p-2 w-full">
+                                    <label class="block text-slate-400 mb-1">Theme Accent Color</label>
+                                    <select id="cvThemeColor" onchange="updateCVTheme()" class="bg-slate-800 border border-slate-700 text-white rounded-lg p-2 w-full">
                                         <option value="#3730a3">Deep Indigo</option>
                                         <option value="#065f46">Emerald Green</option>
                                         <option value="#9f1239">Crimson Red</option>
@@ -207,8 +228,8 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-gray-400 mb-1">CV Typography Font</label>
-                                    <select id="cvFontFamily" onchange="updateCVTheme()" class="bg-gray-800 border border-gray-700 text-white rounded-lg p-2 w-full">
+                                    <label class="block text-slate-400 mb-1">CV Typography Font</label>
+                                    <select id="cvFontFamily" onchange="updateCVTheme()" class="bg-slate-800 border border-slate-700 text-white rounded-lg p-2 w-full">
                                         <option value="sans-serif">Clean Sans-Serif</option>
                                         <option value="serif">Classic Serif</option>
                                         <option value="monospace">Developer Monospace</option>
@@ -217,52 +238,52 @@
                             </div>
                         </div>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider">Personal Information</h3>
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading">Personal Information</h3>
                         <div>
-                            <label class="block text-xs text-gray-400 mb-1">Profile Picture Upload</label>
-                            <input type="file" id="cvPhoto" accept="image/*" onchange="uploadPhoto(event)" class="bg-gray-900 border border-gray-700 p-2 rounded-xl text-xs w-full text-gray-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-indigo-600 file:text-white">
+                            <label class="block text-xs text-slate-400 mb-1">Profile Picture Upload</label>
+                            <input type="file" id="cvPhoto" accept="image/*" onchange="uploadPhoto(event)" class="bg-slate-900 border border-slate-700 p-2 rounded-xl text-xs w-full text-slate-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:bg-indigo-600 file:text-white">
                         </div>
 
                         <div class="grid grid-cols-2 gap-3">
-                            <input type="text" id="cvName" oninput="updateCV()" placeholder="Full Name" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
-                            <input type="text" id="cvTitle" oninput="updateCV()" placeholder="Job Title" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
+                            <input type="text" id="cvName" oninput="updateCV()" placeholder="Full Name" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
+                            <input type="text" id="cvTitle" oninput="updateCV()" placeholder="Job Title" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
                         </div>
                         <div class="grid grid-cols-2 gap-3">
-                            <input type="email" id="cvEmail" oninput="updateCV()" placeholder="Email Address" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
-                            <input type="text" id="cvPhone" oninput="updateCV()" placeholder="Phone Number" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
+                            <input type="email" id="cvEmail" oninput="updateCV()" placeholder="Email Address" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
+                            <input type="text" id="cvPhone" oninput="updateCV()" placeholder="Phone Number" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
                         </div>
                         <div class="grid grid-cols-2 gap-3">
-                            <input type="text" id="cvAddress" oninput="updateCV()" placeholder="City, Country" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
-                            <input type="text" id="cvWebsite" oninput="updateCV()" placeholder="LinkedIn / Portfolio URL" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
+                            <input type="text" id="cvAddress" oninput="updateCV()" placeholder="City, Country" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
+                            <input type="text" id="cvWebsite" oninput="updateCV()" placeholder="LinkedIn / Portfolio URL" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
                         </div>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider pt-2">Summary</h3>
-                        <textarea id="cvSummary" oninput="updateCV()" rows="3" placeholder="Write a short career summary..." class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full"></textarea>
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading pt-2">Summary</h3>
+                        <textarea id="cvSummary" oninput="updateCV()" rows="3" placeholder="Write a short career summary..." class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full"></textarea>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider pt-2">Work Experience</h3>
-                        <textarea id="cvExp" oninput="updateCV()" rows="3" placeholder="Job Title - Company (Year) &#10;• Key Achievement / Responsibility" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full"></textarea>
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading pt-2">Work Experience</h3>
+                        <textarea id="cvExp" oninput="updateCV()" rows="3" placeholder="Job Title - Company (Year) &#10;• Key Achievement / Responsibility" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full"></textarea>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider pt-2">Featured Projects</h3>
-                        <textarea id="cvProjects" oninput="updateCV()" rows="2" placeholder="Project Name - Description / Link" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full"></textarea>
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading pt-2">Featured Projects</h3>
+                        <textarea id="cvProjects" oninput="updateCV()" rows="2" placeholder="Project Name - Description / Link" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full"></textarea>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider pt-2">Education</h3>
-                        <textarea id="cvEdu" oninput="updateCV()" rows="2" placeholder="Degree Name - Institute (Passing Year)" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full"></textarea>
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading pt-2">Education</h3>
+                        <textarea id="cvEdu" oninput="updateCV()" rows="2" placeholder="Degree Name - Institute (Passing Year)" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full"></textarea>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider pt-2">Certifications & Awards</h3>
-                        <textarea id="cvCerts" oninput="updateCV()" rows="2" placeholder="Certification Title - Issuer (Year)" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full"></textarea>
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading pt-2">Certifications & Awards</h3>
+                        <textarea id="cvCerts" oninput="updateCV()" rows="2" placeholder="Certification Title - Issuer (Year)" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full"></textarea>
 
-                        <h3 class="font-bold text-cyan-400 border-b border-gray-800 pb-1 text-xs uppercase tracking-wider pt-2">Skills & Languages</h3>
-                        <input type="text" id="cvSkills" oninput="updateCV()" placeholder="Skills (HTML, SEO, Python...)" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
-                        <input type="text" id="cvLang" oninput="updateCV()" placeholder="Languages (English, Urdu...)" class="bg-gray-900 border border-gray-700 p-2.5 rounded-xl text-xs w-full">
+                        <h3 class="font-bold text-cyan-400 border-b border-slate-800 pb-1 text-xs uppercase tracking-wider font-heading pt-2">Skills & Languages</h3>
+                        <input type="text" id="cvSkills" oninput="updateCV()" placeholder="Skills (HTML, SEO, Python...)" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full mb-2">
+                        <input type="text" id="cvLang" oninput="updateCV()" placeholder="Languages (English, Urdu...)" class="bg-slate-900 border border-slate-700 p-2.5 rounded-xl text-xs w-full">
                     </div>
 
                     <!-- Live CV Preview -->
-                    <div class="bg-white text-gray-900 p-8 rounded-2xl shadow-2xl space-y-5" id="cvPreviewArea">
+                    <div class="bg-white text-slate-900 p-8 rounded-2xl shadow-2xl space-y-5" id="cvPreviewArea">
                         <div class="border-b-2 border-indigo-900 pb-4 flex items-center justify-between gap-4" id="cvHeaderBorder">
                             <div>
-                                <h1 id="pvName" class="text-3xl font-black uppercase tracking-wide text-indigo-900">Ali Zain</h1>
+                                <h1 id="pvName" class="text-3xl font-black uppercase tracking-wide text-indigo-900 font-heading">Ali Zain</h1>
                                 <p id="pvTitle" class="text-sm font-bold text-indigo-700">Digital Specialist</p>
-                                <div class="flex flex-wrap gap-3 text-xs text-gray-600 mt-2">
+                                <div class="flex flex-wrap gap-3 text-xs text-slate-600 mt-2">
                                     <div>📧 <span id="pvEmail">ali@example.com</span></div>
                                     <div>📞 <span id="pvPhone">+92 300 1234567</span></div>
                                     <div>📍 <span id="pvAddress">Punjab, Pakistan</span></div>
@@ -275,8 +296,329 @@
                         </div>
 
                         <div>
-                            <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest border-b pb-1 mb-1 section-title">Profile Summary</h4>
-                            <p id="pvSummary" class="text-xs text-gray-700 leading-relaxed">Dedicated professional with expertise in digital growth strategies and web development.</p>
+                            <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest border-b pb-1 mb-1 section-title font-heading">Profile Summary</h4>
+                            <p id="pvSummary" class="text-xs text-slate-700 leading-relaxed">Dedicated professional with expertise in digital growth strategies and web development.</p>
                         </div>
 
-                  
+                        <div>
+                            <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest border-b pb-1 mb-1 section-title font-heading">Work Experience</h4>
+                            <p id="pvExp" class="text-xs text-slate-700 whitespace-pre-line">Digital Marketer - Digital Skill Zone (2024 - Present)
+• Executed social media campaigns and SEO growth strategies.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest border-b pb-1 mb-1 section-title font-heading">Key Projects</h4>
+                            <p id="pvProjects" class="text-xs text-slate-700 whitespace-pre-line">E-commerce Web App - Built responsive store layout with online checkout integration.</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest border-b pb-1 mb-1 section-title font-heading">Education</h4>
+                            <p id="pvEdu" class="text-xs text-slate-700 whitespace-pre-line">Matriculation / Intermediate - Board of Education</p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest border-b pb-1 mb-1 section-title font-heading">Certifications</h4>
+                            <p id="pvCerts" class="text-xs text-slate-700 whitespace-pre-line">Google Digital Marketing Certificate (2025)</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4 border-t pt-3">
+                            <div>
+                                <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest mb-1 section-title font-heading">Key Skills</h4>
+                                <p id="pvSkills" class="text-xs text-slate-700">Digital Marketing, Web Development, SEO</p>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold text-indigo-900 uppercase tracking-widest mb-1 section-title font-heading">Languages</h4>
+                                <p id="pvLang" class="text-xs text-slate-700">English, Urdu</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 5: DIGITAL MARKETING LECTURES -->
+            <div id="marketingSection" class="hidden space-y-6">
+                <div class="glass-card p-6 rounded-2xl">
+                    <h2 class="text-2xl font-bold text-emerald-400 font-heading">📹 Digital Marketing Masterclass Series</h2>
+                    <p class="text-xs text-slate-400 mt-1">Free practical video lectures on Marketing, SEO, Social Media Ads & Content Strategy.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <div class="aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/bixR-KIJKYM" title="Course" frameborder="0" allowfullscreen></iframe></div>
+                        <div class="p-4"><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-semibold">Lecture 1</span><h3 class="font-bold text-white text-sm mt-2 font-heading">Full Digital Marketing Course</h3></div>
+                    </div>
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <div class="aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/nU-IIXBWlS4" title="SEO" frameborder="0" allowfullscreen></iframe></div>
+                        <div class="p-4"><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-semibold">Lecture 2</span><h3 class="font-bold text-white text-sm mt-2 font-heading">Complete SEO Masterclass</h3></div>
+                    </div>
+                    <div class="glass-card rounded-2xl overflow-hidden">
+                        <div class="aspect-video"><iframe class="w-full h-full" src="https://www.youtube.com/embed/1R44m32i2s0" title="SMM" frameborder="0" allowfullscreen></iframe></div>
+                        <div class="p-4"><span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-semibold">Lecture 3</span><h3 class="font-bold text-white text-sm mt-2 font-heading">Social Media Marketing</h3></div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="border-t border-slate-800/80 py-6 text-center text-xs text-slate-500 mt-12">
+            <p class="font-semibold text-slate-400">Thanks for visiting us ❤️</p>
+            <p class="mt-1">Powered by <span class="text-indigo-400 font-bold">Ali Zain</span> | digitalskillzonebyzain</p>
+        </footer>
+
+    </div>
+
+    <!-- JAVASCRIPT ENGINE -->
+    <script>
+        // WELCOME SCREEN ENTER FUNCTION
+        function enterZone() {
+            document.getElementById('welcomeScreen').style.display = 'none';
+            const main = document.getElementById('mainContent');
+            main.classList.remove('hidden');
+            main.classList.add('flex');
+        }
+
+        // NAVIGATION ENGINE
+        function showSection(sectionId) {
+            const sections = ['homeSection', 'aiToolsSection', 'shortcutsSection', 'fontSection', 'cvSection', 'marketingSection'];
+            sections.forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(sectionId).classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 1. AI TOOLS LIST
+        const aiToolsList = [
+            { name: "ChatGPT", category: "Text & Writing", desc: "Conversational AI for copywriting, brain-storming & coding assistance.", link: "https://chatgpt.com", icon: "🧠" },
+            { name: "Claude AI", category: "Text & Writing", desc: "Advanced reasoning AI for long document analysis and technical writing.", link: "https://claude.ai", icon: "✍️" },
+            { name: "Google Gemini", category: "Text & Writing", desc: "Google's multimodal AI for research, writing, and real-time analysis.", link: "https://gemini.google.com", icon: "✨" },
+            { name: "Copy.ai", category: "Text & Writing", desc: "Automated AI copywriter for social media captions, ads & marketing copy.", link: "https://www.copy.ai", icon: "📢" },
+            { name: "Leonardo.ai", category: "Image Generation", desc: "Create high-quality AI artwork, game assets & photorealistic art.", link: "https://leonardo.ai", icon: "🎨" },
+            { name: "Ideogram AI", category: "Image Generation", desc: "Best AI model for text rendering inside generated graphics & logos.", link: "https://ideogram.ai", icon: "🖼️" },
+            { name: "Midjourney", category: "Image Generation", desc: "Industry-grade ultra-realistic image generator via Discord platform.", link: "https://www.midjourney.com", icon: "🌌" },
+            { name: "Canva Magic Studio", category: "Image & Design", desc: "AI graphic design suite with background remover and magic edit.", link: "https://www.canva.com", icon: "✨" },
+            { name: "Clipdrop AI", category: "Image Editing", desc: "Remove objects, clean backgrounds, up-scale images instantly.", link: "https://clipdrop.co", icon: "✂️" },
+            { name: "GitHub Copilot", category: "Coding & Dev", desc: "AI pair programmer that auto-completes code in VS Code & IDEs.", link: "https://github.com/features/copilot", icon: "💻" },
+            { name: "Codeium", category: "Coding & Dev", desc: "Free AI code acceleration tool supporting 70+ programming languages.", link: "https://codeium.com", icon: "⚡" },
+            { name: "Replit Ghostwriter", category: "Coding & Dev", desc: "In-browser AI coding assistant, bug fixer and live builder.", link: "https://replit.com", icon: "🤖" },
+            { name: "Phind AI", category: "Coding & Dev", desc: "Search engine tuned specifically for developers and software engineering.", link: "https://www.phind.com", icon: "🔍" },
+            { name: "ElevenLabs", category: "Audio & Voice", desc: "Ultra-realistic AI voice cloning and text-to-speech engine.", link: "https://elevenlabs.io", icon: "🎙️" },
+            { name: "Suno AI", category: "Audio & Music", desc: "Generate full studio-quality songs and lyrics from simple text prompts.", link: "https://suno.com", icon: "🎵" },
+            { name: "Murf.ai", category: "Audio & Voice", desc: "Studio-quality voiceover generator for presentations, videos & podcasts.", link: "https://murf.ai", icon: "🔊" },
+            { name: "Runway ML (Gen-2)", category: "Video & Motion", desc: "Generate cinematic video clips from text prompts or static images.", link: "https://runwayml.com", icon: "🎬" },
+            { name: "Pika Labs", category: "Video & Motion", desc: "AI video generation and animation platform for creators.", link: "https://pika.art", icon: "📹" },
+            { name: "HeyGen AI", category: "Video & Avatar", desc: "Create AI video spokespersons and multi-lingual avatar videos.", link: "https://www.heygen.com", icon: "👤" },
+            { name: "Perplexity AI", category: "Research & Search", desc: "AI answer engine providing cited research from real-time web sources.", link: "https://www.perplexity.ai", icon: "🔬" },
+            { name: "Otter.ai", category: "Productivity", desc: "Automatic meeting notes transcription and real-time summary tool.", link: "https://otter.ai", icon: "📝" },
+            { name: "Notion AI", category: "Productivity", desc: "Integrated AI assistant inside your workspace for notes & docs.", link: "https://www.notion.so", icon: "📓" }
+        ];
+
+        function renderAITools() {
+            const grid = document.getElementById('aiToolsGrid');
+            grid.innerHTML = "";
+            aiToolsList.forEach(tool => {
+                const card = document.createElement('div');
+                card.className = "ai-tool-card glass-card p-5 rounded-2xl flex flex-col justify-between";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">${tool.icon}</span>
+                            <span class="text-[10px] bg-pink-500/10 text-pink-300 border border-pink-500/30 px-2 py-0.5 rounded-full font-semibold uppercase tracking-wider">${tool.category}</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1 font-heading">${tool.name}</h3>
+                        <p class="text-xs text-slate-400 mb-4 leading-relaxed">${tool.desc}</p>
+                    </div>
+                    <a href="${tool.link}" target="_blank" class="block text-center bg-slate-900 hover:bg-pink-600 text-slate-300 hover:text-white font-semibold text-xs py-2 px-4 rounded-xl border border-slate-700 transition">
+                        Open Tool ↗
+                    </a>
+                `;
+                grid.appendChild(card);
+            });
+        }
+        renderAITools();
+
+        function filterAITools() {
+            const query = document.getElementById('searchAITools').value.toLowerCase();
+            const cards = document.querySelectorAll('.ai-tool-card');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        // 2. SHORTCUT KEYS LIST
+        const allKeys = [
+            { action: "Copy Selected Item", key: "Ctrl + C" },
+            { action: "Paste Selected Item", key: "Ctrl + V" },
+            { action: "Cut Selected Item", key: "Ctrl + X" },
+            { action: "Undo Last Action", key: "Ctrl + Z" },
+            { action: "Redo Last Action", key: "Ctrl + Y" },
+            { action: "Select All Items", key: "Ctrl + A" },
+            { action: "Save Current File", key: "Ctrl + S" },
+            { action: "Print Document / Page", key: "Ctrl + P" },
+            { action: "Find Text in Page", key: "Ctrl + F" },
+            { action: "Find and Replace Text", key: "Ctrl + H" },
+            { action: "Open New Tab", key: "Ctrl + T" },
+            { action: "Close Active Tab", key: "Ctrl + W" },
+            { action: "Reopen Last Closed Tab", key: "Ctrl + Shift + T" },
+            { action: "Open Incognito Window", key: "Ctrl + Shift + N" },
+            { action: "Open Downloads Page", key: "Ctrl + J" },
+            { action: "Open Browser History", key: "Ctrl + H" },
+            { action: "Bookmark Current Page", key: "Ctrl + D" },
+            { action: "Open Task Manager", key: "Ctrl + Shift + Esc" },
+            { action: "Make Text Bold", key: "Ctrl + B" },
+            { action: "Make Text Italic", key: "Ctrl + I" },
+            { action: "Underline Selected Text", key: "Ctrl + U" },
+            { action: "Align Paragraph Center", key: "Ctrl + E" },
+            { action: "Align Paragraph Left", key: "Ctrl + L" },
+            { action: "Align Paragraph Right", key: "Ctrl + R" },
+            { action: "Justify Paragraph Text", key: "Ctrl + J" },
+            { action: "Insert Hyperlink", key: "Ctrl + K" },
+            { action: "Open File Explorer", key: "Win + E" },
+            { action: "Lock Computer Screen", key: "Win + L" },
+            { action: "Show or Hide Desktop", key: "Win + D" },
+            { action: "Take Snipping Screenshot", key: "Win + Shift + S" },
+            { action: "Open Settings Panel", key: "Win + I" },
+            { action: "Open Run Command Box", key: "Win + R" },
+            { action: "Open Action Center", key: "Win + A" },
+            { action: "Open Clipboard History", key: "Win + V" },
+            { action: "Open Emoji Panel", key: "Win + ." },
+            { action: "Switch Active Windows", key: "Alt + Tab" },
+            { action: "Close Active Program / App", key: "Alt + F4" },
+            { action: "Focus Address Bar", key: "Alt + D" },
+            { action: "Refresh Window / Page", key: "F5" },
+            { action: "Rename Selected Item", key: "F2" },
+            { action: "Open Help Screen", key: "F1" },
+            { action: "Toggle Full Screen View", key: "F11" }
+        ];
+
+        function renderKeys() {
+            const container = document.getElementById('keysMasterList');
+            container.innerHTML = "";
+            allKeys.forEach(item => {
+                const div = document.createElement('div');
+                div.className = "key-row flex items-center justify-between p-2.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition";
+                div.innerHTML = `
+                    <span class="text-slate-300 pr-2">${item.action}</span>
+                    <kbd class="bg-slate-800 text-cyan-300 font-bold px-2 py-1 rounded-lg border border-slate-700 shrink-0">${item.key}</kbd>
+                `;
+                container.appendChild(div);
+            });
+        }
+        renderKeys();
+
+        function filterKeys() {
+            const query = document.getElementById('searchKeys').value.toLowerCase();
+            const rows = document.querySelectorAll('.key-row');
+            rows.forEach(row => {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        // 3. FONT CONVERTER ENGINE
+        function generateUnicodeFont(str, type) {
+            const offsets = {
+                bold: [0x1D400, 0x1D41A, 0x1D7CE],
+                italic: [0x1D434, 0x1D44E, 0x1D7CE],
+                boldItalic: [0x1D468, 0x1D482, 0x1D7CE],
+                script: [0x1D49C, 0x1D4B6, 0x1D7CE],
+                boldScript: [0x1D4D0, 0x1D4EA, 0x1D7CE],
+                gothic: [0x1D504, 0x1D51E, 0x1D7CE],
+                doubleStruck: [0x1D56C, 0x1D586, 0x1D7D8],
+                sans: [0x1D5A0, 0x1D5BA, 0x1D7E2],
+                monospace: [0x1D670, 0x1D68A, 0x1D7F6]
+            };
+
+            const cfg = offsets[type];
+            if (!cfg) return str;
+
+            return str.split('').map(ch => {
+                let code = ch.charCodeAt(0);
+                if (code >= 65 && code <= 90) return String.fromCodePoint(cfg[0] + (code - 65));
+                if (code >= 97 && code <= 122) return String.fromCodePoint(cfg[1] + (code - 97));
+                if (code >= 48 && code <= 57) return String.fromCodePoint(cfg[2] + (code - 48));
+                return ch;
+            }).join('');
+        }
+
+        function convertFonts() {
+            const input = document.getElementById('fontInput').value || "Ali Zain Digital Zone";
+            const fontGrid = document.getElementById('fontGrid');
+            fontGrid.innerHTML = "";
+
+            const baseStyles = [
+                { name: "Bold Serif", text: generateUnicodeFont(input, 'bold') },
+                { name: "Italic Serif", text: generateUnicodeFont(input, 'italic') },
+                { name: "Bold Italic", text: generateUnicodeFont(input, 'boldItalic') },
+                { name: "Script Cursive", text: generateUnicodeFont(input, 'script') },
+                { name: "Gothic Blackletter", text: generateUnicodeFont(input, 'gothic') },
+                { name: "Double Struck", text: generateUnicodeFont(input, 'doubleStruck') },
+                { name: "Clean Sans", text: generateUnicodeFont(input, 'sans') },
+                { name: "Monospace", text: generateUnicodeFont(input, 'monospace') }
+            ];
+
+            const frames = [
+                t => `✨ ${t} ✨`, t => `👑 ${t} 👑`, t => `🔥 ${t} 🔥`, t => `⚡ ${t} ⚡`,
+                t => `꧁༺ ${t} ༻꧂`, t => `★彡 ${t} 彡★`, t => `◈◇ ${t} ◇◈`, t => `♥ ${t} ♥`,
+                t => `[ ${t} ]`, t => `『 ${t} 』`, t => `✦ ${t} ✦`, t => `💎 ${t} 💎`
+            ];
+
+            let count = 0;
+            baseStyles.forEach(style => {
+                frames.forEach(frame => {
+                    if (count >= 500) return;
+                    count++;
+                    const transformed = frame(style.text);
+                    const card = document.createElement('div');
+                    card.className = "glass-card p-4 rounded-xl flex items-center justify-between text-sm";
+                    card.innerHTML = `
+                        <div class="overflow-hidden pr-2">
+                            <span class="text-[10px] text-purple-400 font-semibold block mb-1">Style #${count} - ${style.name}</span>
+                            <span class="text-white text-base font-medium truncate block">${transformed}</span>
+                        </div>
+                        <button onclick="navigator.clipboard.writeText('${transformed.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')" class="shrink-0 bg-purple-600/30 hover:bg-purple-600 text-purple-300 hover:text-white px-3 py-1.5 rounded-lg text-xs border border-purple-500/40 transition cursor-pointer">Copy</button>
+                    `;
+                    fontGrid.appendChild(card);
+                });
+            });
+        }
+        convertFonts();
+
+        // 4. CV BUILDER LOGIC
+        function uploadPhoto(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('pvPhoto').src = reader.result;
+            };
+            if(event.target.files[0]) reader.readAsDataURL(event.target.files[0]);
+        }
+
+        function updateCVTheme() {
+            const color = document.getElementById('cvThemeColor').value;
+            const font = document.getElementById('cvFontFamily').value;
+            const preview = document.getElementById('cvPreviewArea');
+            preview.style.fontFamily = font;
+
+            document.getElementById('pvName').style.color = color;
+            document.getElementById('pvTitle').style.color = color;
+            document.getElementById('cvHeaderBorder').style.borderColor = color;
+            document.querySelectorAll('#cvPreviewArea .section-title').forEach(s => s.style.color = color);
+        }
+
+        function updateCV() {
+            document.getElementById('pvName').innerText = document.getElementById('cvName').value || "Ali Zain";
+            document.getElementById('pvTitle').innerText = document.getElementById('cvTitle').value || "Digital Specialist";
+            document.getElementById('pvEmail').innerText = document.getElementById('cvEmail').value || "ali@example.com";
+            document.getElementById('pvPhone').innerText = document.getElementById('cvPhone').value || "+92 300 1234567";
+            document.getElementById('pvAddress').innerText = document.getElementById('cvAddress').value || "Punjab, Pakistan";
+            document.getElementById('pvWebsite').innerText = document.getElementById('cvWebsite').value || "linkedin.com/in/alizain";
+            document.getElementById('pvSummary').innerText = document.getElementById('cvSummary').value || "Summary details...";
+            document.getElementById('pvExp').innerText = document.getElementById('cvExp').value || "Work experience...";
+            document.getElementById('pvProjects').innerText = document.getElementById('cvProjects').value || "Project details...";
+            document.getElementById('pvEdu').innerText = document.getElementById('cvEdu').value || "Education details...";
+            document.getElementById('pvCerts').innerText = document.getElementById('cvCerts').value || "Certifications...";
+            document.getElementById('pvSkills').innerText = document.getElementById('cvSkills').value || "Skills list...";
+            document.getElementById('pvLang').innerText = document.getElementById('cvLang').value || "Languages...";
+        }
+    </script>
+</body>
+</html>
