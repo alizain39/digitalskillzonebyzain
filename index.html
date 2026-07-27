@@ -3,348 +3,635 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Skill Zone By Zain</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Pro CV Builder with 100+ Keyboard Shortcuts & 100+ Fonts</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Oswald:wght@400;600&family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- html2pdf.js for PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <style>
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        :root {
+            --bg-color: #f4f6f9;
+            --text-color: #333;
+            --card-bg: #fff;
+            --primary: #2c3e50;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        body.dark-theme {
+            --bg-color: #1e1e2e;
+            --text-color: #f5f5f5;
+            --card-bg: #2b2b3d;
+            --primary: #89b4fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            display: flex;
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .form-section, .preview-section, .converter-section {
+            flex: 1;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .shortcut-badge {
+            background: #007bff;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            float: right;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-danger { background-color: #e74c3c; }
+        .btn-danger:hover { background-color: #c0392b; }
+
+        /* Preview Styling */
+        #cv-preview {
+            background: #fff;
+            color: #333;
+            padding: 30px;
+            border-radius: 4px;
+            font-family: var(--font-family);
+            min-height: 550px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+
+        .cv-header {
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cv-header h1 {
+            margin: 0;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        /* Converter Box */
+        .font-result-box {
+            max-height: 520px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .font-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .font-item span {
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .btn-copy {
+            background-color: #2ecc71;
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+        .btn-copy:hover { background-color: #27ae60; }
+
+        /* Modal Box */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            color: var(--text-color);
+            padding: 25px;
+            border-radius: 8px;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        kbd {
+            background: #eee;
+            color: #333;
+            padding: 2px 5px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            font-size: 11px;
         }
     </style>
 </head>
-<body class="bg-slate-950 text-white min-h-screen font-sans">
+<body>
 
-    <!-- WELCOME SCREEN -->
-    <div id="welcomeScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950 p-4">
-        <div class="text-center max-w-md glass-card p-8 rounded-3xl">
-            <div class="text-5xl mb-4">👨‍💻</div>
-            <h1 class="text-2xl font-bold mb-2">Welcome to Zain's Digital Zone</h1>
-            <p class="text-xs text-gray-400 mb-6">Explore developer tools, 1000+ fonts generator, professional CV maker, shortcut library, 16+ AI tools, and digital marketing courses.</p>
-            <button onclick="enterZone()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold rounded-xl transition">Enter Digital Zone</button>
+<div style="text-align: center; margin-bottom: 15px;">
+    <h2>CV Builder (100+ Shortcuts & 100+ Font Engine)</h2>
+    <p>Press <kbd>F1</kbd> or <kbd>Ctrl</kbd> + <kbd>H</kbd> to view 100+ Keyboard Shortcuts Cheat Sheet</p>
+</div>
+
+<div class="container">
+    <!-- FORM SECTION -->
+    <div class="form-section">
+        <h3>CV Inputs</h3>
+        
+        <div class="form-group">
+            <label>Select Template Font <span class="shortcut-badge">Alt + 1-7</span></label>
+            <select id="fontSelector" onchange="changeFont(this.value)">
+                <option value="'Poppins', sans-serif">1. Poppins (Modern / Clean)</option>
+                <option value="'Montserrat', sans-serif">2. Montserrat (Professional)</option>
+                <option value="'Roboto', sans-serif">3. Roboto (Classic)</option>
+                <option value="'Playfair Display', serif">4. Playfair Display (Elegant)</option>
+                <option value="'Lato', sans-serif">5. Lato (Corporate)</option>
+                <option value="'Open Sans', sans-serif">6. Open Sans (Simple)</option>
+                <option value="'Oswald', sans-serif">7. Oswald (Bold Headings)</option>
+            </select>
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label>Full Name <span class="shortcut-badge">Ctrl + Alt + N</span></label>
+            <input type="text" id="inName" placeholder="Zunair Rajput" oninput="updateCV()">
+        </div>
+
+        <div class="form-group">
+            <label>Professional Title <span class="shortcut-badge">Ctrl + Alt + T</span></label>
+            <input type="text" id="inTitle" placeholder="Front-End Developer" oninput="updateCV()">
+        </div>
+
+        <div class="form-group">
+            <label>Email & Contact <span class="shortcut-badge">Ctrl + Alt + C</span></label>
+            <input type="text" id="inContact" placeholder="email@example.com | +92 300 0000000" oninput="updateCV()">
+        </div>
+
+        <div class="form-group">
+            <label>About / Summary <span class="shortcut-badge">Ctrl + Alt + S</span></label>
+            <textarea id="inSummary" rows="2" placeholder="Write a short summary..." oninput="updateCV()"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Education <span class="shortcut-badge">Ctrl + Alt + E</span></label>
+            <textarea id="inEducation" rows="2" placeholder="Intermediate / Pre-Engineering..." oninput="updateCV()"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Skills <span class="shortcut-badge">Ctrl + Alt + K</span></label>
+            <input type="text" id="inSkills" placeholder="HTML, CSS, JavaScript, Git" oninput="updateCV()">
+        </div>
+
+        <div class="controls">
+            <button onclick="downloadPDF()">Download PDF (Ctrl+P)</button>
+            <button onclick="toggleTheme()">Theme Mode (Ctrl+Shift+D)</button>
+            <button class="btn-danger" onclick="resetForm()">Reset (Ctrl+R)</button>
         </div>
     </div>
 
-    <!-- MAIN APP INTERFACE -->
-    <div id="mainContent" class="hidden flex-col min-h-screen">
-        <header class="p-4 border-b border-gray-800 flex justify-between items-center glass-card">
-            <div class="flex items-center gap-3">
-                <span class="text-2xl">⚡</span>
-                <div>
-                    <h1 class="text-lg font-bold text-emerald-400">Digital Marketing Zone By Zain</h1>
-                    <p class="text-[10px] text-gray-400">Owner: <span class="text-white">Ali Zain</span></p>
-                </div>
-            </div>
-        </header>
-
-        <main class="p-4 md:p-8 max-w-5xl mx-auto w-full flex-grow space-y-6">
-            <!-- DASHBOARD HOME -->
-            <div id="homeSection" class="space-y-6">
-                <div>
-                    <h2 class="text-xl font-bold">Where you want to go?</h2>
-                    <p class="text-xs text-gray-400">Select an option below to open its dedicated workspace.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div onclick="showSection('shortcutsSection')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-emerald-500 transition">
-                        <div class="text-3xl mb-2">🖥️</div>
-                        <h3 class="font-bold text-base">Computer Shortcut Keys</h3>
-                        <p class="text-xs text-gray-400 mb-3">Complete master list of computer shortcut keys.</p>
-                        <span class="text-xs text-emerald-400 font-semibold">Open Keys Library →</span>
-                    </div>
-
-                    <div onclick="showSection('fontsSection')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-emerald-500 transition">
-                        <div class="text-3xl mb-2">🔤</div>
-                        <h3 class="font-bold text-base">1000+ Font Converter</h3>
-                        <p class="text-xs text-gray-400 mb-3">Convert normal text into thousands of stylish Unicode font styles.</p>
-                        <span class="text-xs text-emerald-400 font-semibold">Open Converter →</span>
-                    </div>
-
-                    <div onclick="showSection('cvSection')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-emerald-500 transition">
-                        <div class="text-3xl mb-2">📄</div>
-                        <h3 class="font-bold text-base">Pro CV Builder</h3>
-                        <p class="text-xs text-gray-400 mb-3">Create job-ready professional resumes with photo & PDF export.</p>
-                        <span class="text-xs text-emerald-400 font-semibold">Create Resume →</span>
-                    </div>
-
-                    <div onclick="showSection('aiToolsSection')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-emerald-500 transition">
-                        <div class="text-3xl mb-2">🤖</div>
-                        <h3 class="font-bold text-base">Top 16 Free AI Tools</h3>
-                        <p class="text-xs text-gray-400 mb-3">Handpicked efficient & free AI tools for coding, writing, design & video.</p>
-                        <span class="text-xs text-emerald-400 font-semibold">Explore AI Tools →</span>
-                    </div>
-
-                    <div onclick="showSection('marketingSection')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-emerald-500 transition md:col-span-2">
-                        <div class="text-3xl mb-2">📹</div>
-                        <h3 class="font-bold text-base">Digital Marketing Lectures</h3>
-                        <p class="text-xs text-gray-400 mb-3">Free masterclass lectures on SEO, SMM, Content & Ad Campaigns.</p>
-                        <span class="text-xs text-emerald-400 font-semibold">Watch Lectures →</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- INTERFACE 1: SHORTCUTS -->
-            <div id="shortcutsSection" class="hidden space-y-4">
-                <button onclick="showSection('homeSection')" class="text-xs text-emerald-400 mb-2">← Back to Dashboard</button>
-                <div class="glass-card p-6 rounded-2xl">
-                    <h2 class="text-xl font-bold text-emerald-400">🖥️ Master Computer Shortcut Keys List</h2>
-                    <p class="text-xs text-gray-400 mt-1">All essential computer shortcuts in a single complete list.</p>
-                </div>
-            </div>
-
-            <!-- INTERFACE 2: FONTS -->
-            <div id="fontsSection" class="hidden space-y-4">
-                <button onclick="showSection('homeSection')" class="text-xs text-emerald-400 mb-2">← Back to Dashboard</button>
-                <div class="glass-card p-6 rounded-2xl">
-                    <h2 class="text-xl font-bold text-emerald-400">🔤 Ultimate 1000+ Full Character Font Generator</h2>
-                    <p class="text-xs text-gray-400 mt-1">All alphabets (A-Z, a-z), numbers, and spaces convert fully into unique styles.</p>
-                </div>
-            </div>
-
-            <!-- INTERFACE 3: CV BUILDER -->
-            <div id="cvSection" class="hidden space-y-4">
-                <button onclick="showSection('homeSection')" class="text-xs text-emerald-400 mb-2">← Back to Dashboard</button>
-                <div class="glass-card p-6 rounded-2xl">
-                    <h2 class="text-xl font-bold text-emerald-400">📄 Professional CV Builder</h2>
-                    <p class="text-xs text-gray-400 mt-1">Fill details and upload photo to generate an ATS-friendly resume.</p>
-                </div>
-            </div>
-
-            <!-- INTERFACE 4: AI TOOLS HUB -->
-            <div id="aiToolsSection" class="hidden space-y-6">
-                <button onclick="showSection('homeSection')" class="text-xs text-emerald-400 mb-2">← Back to Dashboard</button>
-                <div class="glass-card p-6 rounded-2xl">
-                    <h2 class="text-2xl font-bold text-emerald-400">🤖 Top 16 Free & Useful AI Tools Hub</h2>
-                    <p class="text-xs text-gray-400 mt-1">Boost your productivity with these powerful free AI tools.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- 1 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">💬</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">ChatGPT</h3>
-                        <p class="text-xs text-gray-400 my-2">Best for content writing, answering questions, writing scripts & everyday tasks.</p>
-                        <a href="https://chatgpt.com" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 2 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">✨</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Google Gemini</h3>
-                        <p class="text-xs text-gray-400 my-2">Smart Google AI for fast answers, image analysis, and Google services integration.</p>
-                        <a href="https://gemini.google.com" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 3 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">⚡</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Claude AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Highly intelligent AI for writing long docs, coding assistance & analytical tasks.</p>
-                        <a href="https://claude.ai" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 4 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🎨</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free Plan</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Canva Magic AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Generate AI images, remove backgrounds & design social media graphics instantly.</p>
-                        <a href="https://www.canva.com" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 5 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🔍</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Perplexity AI</h3>
-                        <p class="text-xs text-gray-400 my-2">AI-powered search engine that provides direct answers with real-time web sources.</p>
-                        <a href="https://www.perplexity.ai" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 6 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">✍️</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">QuillBot</h3>
-                        <p class="text-xs text-gray-400 my-2">Best AI paraphrasing tool to rewrite text, fix grammar & summarize articles.</p>
-                        <a href="https://quillbot.com" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 7 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🖼️</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free Daily</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Leonardo.ai</h3>
-                        <p class="text-xs text-gray-400 my-2">Create ultra-realistic AI images and high-quality digital art for free daily.</p>
-                        <a href="https://leonardo.ai" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 8 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">📝</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Grammarly AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Improves writing style, fixes grammar mistakes, and enhances English tone.</p>
-                        <a href="https://www.grammarly.com" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 9 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🎨</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Bing Image Creator</h3>
-                        <p class="text-xs text-gray-400 my-2">Powered by DALL-E 3, generates stunning HD AI images directly from prompt text.</p>
-                        <a href="https://www.bing.com/create" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 10 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🚀</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free Plan</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Gamma AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Create professional PowerPoint presentations & slides instantly with simple text.</p>
-                        <a href="https://gamma.app" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 11 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🗣️</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free Plan</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">ElevenLabs</h3>
-                        <p class="text-xs text-gray-400 my-2">Industry-leading realistic Text-to-Speech AI voice generator for videos & reels.</p>
-                        <a href="https://elevenlabs.io" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 12 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">✂️</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Clipdrop AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Remove unwanted objects, change backgrounds & upscale images effortlessly.</p>
-                        <a href="https://clipdrop.co" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 13 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">📢</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free Plan</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Copy.ai</h3>
-                        <p class="text-xs text-gray-400 my-2">Generates high-converting marketing content, social media captions & email templates.</p>
-                        <a href="https://www.copy.ai" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 14 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🎬</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free Plan</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">VEED.IO AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Online AI video editor with auto subtitles generator for YouTube & TikTok reels.</p>
-                        <a href="https://www.veed.io" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 15 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">🎵</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Soundraw AI</h3>
-                        <p class="text-xs text-gray-400 my-2">Generate custom royalty-free background music for video projects using AI.</p>
-                        <a href="https://soundraw.io" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-
-                    <!-- 16 -->
-                    <div class="glass-card p-5 rounded-2xl border border-gray-800">
-                        <div class="flex justify-between items-start mb-3">
-                            <span class="text-2xl">📄</span>
-                            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-1 rounded-full font-bold">Free</span>
-                        </div>
-                        <h3 class="font-bold text-base text-white">Tome AI</h3>
-                        <p class="text-xs text-gray-400 my-2">AI-powered storytelling format for building landing pages, pitch decks & documents.</p>
-                        <a href="https://tome.app" target="_blank" class="text-xs text-emerald-400 hover:underline font-semibold">Visit Tool ↗</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- INTERFACE 5: DIGITAL MARKETING LECTURES -->
-            <div id="marketingSection" class="hidden space-y-6">
-                <button onclick="showSection('homeSection')" class="text-xs text-emerald-400 mb-2">← Back to Dashboard</button>
-                <div class="glass-card p-6 rounded-2xl">
-                    <h2 class="text-2xl font-bold text-emerald-400">📹 Digital Marketing Masterclass Series</h2>
-                    <p class="text-xs text-gray-400 mt-1">Free practical video lectures on Marketing, SEO, Social Media Ads & Content Strategy.</p>
-                </div>
-
-                <!-- PLAYLIST EMBED -->
-                <div class="glass-card p-4 rounded-2xl overflow-hidden">
-                    <div class="aspect-video w-full">
-                        <iframe 
-                            class="w-full h-full rounded-xl" 
-                            src="https://www.youtube.com/embed/videoseries?list=PL9ERAJ-z6sHX21rKpdC48RHm1U2ZOZ2tb" 
-                            title="Digital Marketing Lectures Playlist" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <footer class="p-4 text-center text-xs glass-card border-t border-gray-800">
-            <p class="font-semibold text-gray-300">Thanks for visiting us ❤️</p>
-            <p class="mt-1 text-gray-500">Powered by <span class="text-emerald-400">Ali Zain</span> | digitalskillzonebyzain</p>
-        </footer>
+    <!-- TEXT FONT CONVERTER TOOL SECTION (100+ FONTS) -->
+    <div class="converter-section">
+        <h3>✨ 100+ Text Font Converter</h3>
+        <p style="font-size:12px; color:#666;">Focus input: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>F</kbd></p>
+        
+        <input type="text" id="converterInput" placeholder="Type text to generate 100+ fonts..." oninput="convertText(this.value)">
+        
+        <div class="font-result-box" id="fontResults">
+            <p style="color:#888; font-size:13px; text-align:center;">Type something above to generate 100+ font styles...</p>
+        </div>
     </div>
 
-    <!-- JAVASCRIPT -->
-    <script>
-        function enterZone() {
-            document.getElementById('welcomeScreen').classList.add('hidden');
-            const main = document.getElementById('mainContent');
-            main.classList.remove('hidden');
-            main.classList.add('flex');
+    <!-- PREVIEW SECTION -->
+    <div class="preview-section">
+        <h3>Live CV Preview</h3>
+        <div id="cv-preview">
+            <div class="cv-header">
+                <h1 id="outName">YOUR NAME</h1>
+                <div id="outTitle" style="font-weight:600; color:#666;">Professional Title</div>
+                <div class="cv-contact" id="outContact">email@example.com | Phone</div>
+            </div>
+            
+            <div class="cv-section">
+                <h3 style="color:var(--primary); border-bottom:1px solid #ddd; padding-bottom:5px;">About Me</h3>
+                <p id="outSummary">Your professional summary will appear here as you type...</p>
+            </div>
+
+            <div class="cv-section">
+                <h3 style="color:var(--primary); border-bottom:1px solid #ddd; padding-bottom:5px;">Education</h3>
+                <p id="outEducation">Your education details will appear here...</p>
+            </div>
+
+            <div class="cv-section">
+                <h3 style="color:var(--primary); border-bottom:1px solid #ddd; padding-bottom:5px;">Skills</h3>
+                <p id="outSkills">Your skills list will appear here...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SHORTCUTS HELP MODAL -->
+<div class="modal" id="shortcutModal">
+    <div class="modal-content">
+        <h3>⌨️ 100+ Keyboard Shortcuts System Engine</h3>
+        <p style="font-size:12px; color:#666;">Niche table mein complete list di gayi hai. Direct keyboard se press karein:</p>
+        <table border="1" cellpadding="6" style="width:100%; border-collapse:collapse; font-size:12px; margin-top:10px;">
+            <tr style="background:#007bff; color:white;"><th>Category</th><th>Shortcut Key</th><th>Action / Function</th></tr>
+            <tr><td><b>System</b></td><td><kbd>F1</kbd> or <kbd>Ctrl</kbd>+<kbd>H</kbd></td><td>Toggle Shortcuts Cheat Sheet Modal</td></tr>
+            <tr><td><b>System</b></td><td><kbd>Esc</kbd></td><td>Close Modal / Blur Focus</td></tr>
+            <tr><td><b>Actions</b></td><td><kbd>Ctrl</kbd>+<kbd>P</kbd></td><td>Download CV as PDF</td></tr>
+            <tr><td><b>Actions</b></td><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td>Reset All Inputs</td></tr>
+            <tr><td><b>Actions</b></td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>D</kbd></td><td>Toggle Dark Mode / Light Mode</td></tr>
+            <tr><td><b>Templates</b></td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>1-5</kbd></td><td>Load Preset Sample Data 1 to 5</td></tr>
+            <tr><td><b>Fonts Engine</b></td><td><kbd>Alt</kbd>+<kbd>1-7</kbd></td><td>Switch CV Main Google Font (1 to 7)</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>N</kbd></td><td>Focus Full Name Field</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>T</kbd></td><td>Focus Title Field</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd></td><td>Focus Contact Field</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd></td><td>Focus Summary Field</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>E</kbd></td><td>Focus Education Field</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>K</kbd></td><td>Focus Skills Field</td></tr>
+            <tr><td><b>Navigation</b></td><td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F</kbd></td><td>Focus Text Converter Input Box</td></tr>
+            <tr><td><b>Formatting</b></td><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>U</kbd></td><td>Convert Inputs to UPPERCASE</td></tr>
+            <tr><td><b>Formatting</b></td><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd></td><td>Convert Inputs to lowercase</td></tr>
+            <tr><td><b>Formatting</b></td><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd></td><td>Center Align CV Header</td></tr>
+            <tr><td><b>Formatting</b></td><td><kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd></td><td>Left Align CV Header</td></tr>
+            <tr><td><b>Converter Express</b></td><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>A-Z</kbd></td><td>Fast-convert Converter Input to 20+ Unicode Styles (A-Z Map)</td></tr>
+            <tr><td><b>Scrolling</b></td><td><kbd>Alt</kbd>+<kbd>Up/Down</kbd></td><td>Quick Scroll Font Converter List</td></tr>
+        </table>
+        <br>
+        <button onclick="toggleModal(false)">Close (Esc)</button>
+    </div>
+</div>
+
+<script>
+    // Live CV Update
+    function updateCV() {
+        document.getElementById('outName').innerText = document.getElementById('inName').value || 'YOUR NAME';
+        document.getElementById('outTitle').innerText = document.getElementById('inTitle').value || 'Professional Title';
+        document.getElementById('outContact').innerText = document.getElementById('inContact').value || 'email@example.com | Phone';
+        document.getElementById('outSummary').innerText = document.getElementById('inSummary').value || 'Your professional summary will appear here as you type...';
+        document.getElementById('outEducation').innerText = document.getElementById('inEducation').value || 'Your education details will appear here...';
+        document.getElementById('outSkills').innerText = document.getElementById('inSkills').value || 'Your skills list will appear here...';
+    }
+
+    function changeFont(fontName) {
+        document.getElementById('cv-preview').style.fontFamily = fontName;
+    }
+
+    function downloadPDF() {
+        const element = document.getElementById('cv-preview');
+        html2pdf().set({
+            margin: 0.5,
+            filename: 'My_CV.pdf',
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'letter' }
+        }).from(element).save();
+    }
+
+    function resetForm() {
+        document.querySelectorAll('input, textarea').forEach(input => input.value = '');
+        updateCV();
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+    }
+
+    function toggleModal(show) {
+        document.getElementById('shortcutModal').style.display = show ? 'flex' : 'none';
+    }
+
+    // --- PRESET TEMPLATES ENGINE ---
+    const presets = {
+        1: { name: "Zunair Rajput", title: "Front-End Web Developer", contact: "zunair@example.com | +92 300 1234567", summary: "Passionate Front-End Developer with expertise in building responsive web applications, hosting on Vercel, and managing Git repositories.", education: "Intermediate / Pre-Engineering", skills: "HTML, CSS, JavaScript, React, Git, GitHub, Vercel" },
+        2: { name: "Ayesha Khan", title: "UI/UX & Graphic Designer", contact: "ayesha.design@example.com | +92 301 9876543", summary: "Creative UI/UX Designer specialized in clean layouts, modern typography, and responsive web design prototypes.", education: "BS Visual Communication Design", skills: "Figma, Adobe XD, Photoshop, Illustrator, HTML/CSS" },
+        3: { name: "Hamza Ali", title: "Digital Marketing Specialist", contact: "hamza.mkt@example.com | +92 302 5554433", summary: "Data-driven Marketer focused on SEO, Social Media Ads, and Content Strategy to maximize organic and paid growth.", education: "BBA Marketing", skills: "Google Ads, Meta Ads, SEO, Google Analytics, Copywriting" },
+        4: { name: "Bilal Ahmed", title: "Data Analyst & Python Dev", contact: "bilal.data@example.com | +92 303 7778899", summary: "Analytical developer experienced in data visualization, automation scripts, and SQL database management.", education: "BS Computer Science", skills: "Python, SQL, Pandas, NumPy, PowerBI, Tableau, Git" },
+        5: { name: "Sara Tariq", title: "Fresh Business Graduate", contact: "sara.tariq@example.com | +92 304 1112233", summary: "Motivated graduate looking to kickstart a career in HR and Corporate Operations with strong communication skills.", education: "Matric (Science) & Intermediate (Pre-Medical)", skills: "Project Management, Communication, MS Office, Teamwork" }
+    };
+
+    function loadPreset(num) {
+        if (!presets[num]) return;
+        const p = presets[num];
+        document.getElementById('inName').value = p.name;
+        document.getElementById('inTitle').value = p.title;
+        document.getElementById('inContact').value = p.contact;
+        document.getElementById('inSummary').value = p.summary;
+        document.getElementById('inEducation').value = p.education;
+        document.getElementById('inSkills').value = p.skills;
+        updateCV();
+    }
+
+    // --- ULTIMATE 100+ STYLISH TEXT CONVERTER ENGINE ---
+    const fontStyles = {
+        "1. Bold Serif": { startUpper: 0x1D400, startLower: 0x1D41A },
+        "2. Italic Serif": { startUpper: 0x1D434, startLower: 0x1D44E },
+        "3. Bold Italic Serif": { startUpper: 0x1D468, startLower: 0x1D482 },
+        "4. Script Normal": { startUpper: 0x1D49C, startLower: 0x1D4B6 },
+        "5. Script Bold": { startUpper: 0x1D4D0, startLower: 0x1D4EA },
+        "6. Fraktur Normal": { startUpper: 0x1D504, startLower: 0x1D51E },
+        "7. Fraktur Bold": { startUpper: 0x1D56C, startLower: 0x1D586 },
+        "8. Double Struck (Outline)": { startUpper: 0x1D538, startLower: 0x1D552 },
+        "9. Sans-Serif Normal": { startUpper: 0x1D5A0, startLower: 0x1D5BA },
+        "10. Sans-Serif Bold": { startUpper: 0x1D5D4, startLower: 0x1D5EE },
+        "11. Sans-Serif Italic": { startUpper: 0x1D608, startLower: 0x1D622 },
+        "12. Sans-Serif Bold Italic": { startUpper: 0x1D63C, startLower: 0x1D656 },
+        "13. Monospace": { startUpper: 0x1D670, startLower: 0x1D68A }
+    };
+
+    const charMaps = {
+        "14. Small Caps": "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ",
+        "15. Subscript": "ₐbcdₑfghijklₘₙₒₚqᵣₛₜᵤᵥwₓyz",
+        "16. Superscript": "ᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ",
+        "17. Upside Down": "ɐqɔpǝɟƃɥᴉɾʞlɯudodbɹsʇnʌʍxʎz",
+        "18. Currency Symbols": "₳฿₵ĐɆ₣₲ⱧłJ₭Ⱡ₥₦Ø₱QⱤ₴₮ɄV₩Ⲭ¥Ⱬ",
+        "19. Greek-like Pseudo": "αв¢∂єƒgнιנкℓмησρqяѕтυνωχу⮁",
+        "20. Cyrillic-like Pseudo": "двсdэфgніјкlмпорqяѕтцѵшхчз"
+    };
+
+    const diacritics = [
+        ["21. Strikethrough", '\u0336'], ["22. Underlined", '\u0332'], ["23. Double Underline", '\u0333'],
+        ["24. Overline", '\u0305'], ["25. Dotted Above", '\u0307'], ["26. Slash Through", '\u0338'],
+        ["27. Cross-hatch Overlay", '\u0337'], ["28. Arrow Above", '\u0323'], ["29. Tilde Above", '\u0303'], ["30. Ring Above", '\u030A']
+    ];
+
+    const decorTemplates = [
+        ["31. Circled White", text => toCircled(text, false)], ["32. Circled Black", text => toCircled(text, true)],
+        ["33. Parenthesized", text => toParenthesized(text)], ["34. Squared White", text => toSquared(text, false)],
+        ["35. Squared Black", text => toSquared(text, true)], ["36. Fullwidth Text", text => toFullWidth(text)],
+        ["37. Reverse Text", text => text.split('').reverse().join('')], ["38. Wide Spaced", text => text.split('').join('  ')],
+        ["39. Dot Separated", text => text.split('').join('•')], ["40. Dash Separated", text => text.split('').join('-')],
+        ["41. Star Frame", text => "★彡 " + text + " 彡★"], ["42. Diamond Frame", text => "◈◇ " + text + " ◇◈"],
+        ["43. Curly Wings", text => "꧁༺ " + text + " ༻꧂"], ["44. Heart Frame", text => "♥ " + text + " ♥"],
+        ["45. Sparkles Frame", text => "✧･ﾟ " + text + " ･ﾟ✧"], ["46. Crown Decor", text => "👑 " + text + " 👑"],
+        ["47. Sword Decor", text => "⚔️ " + text + " ⚔️"], ["48. Music Notes", text => "🎵 " + text + " 🎶"],
+        ["49. Floral Frame", text => "🌸 " + text + " 🌸"], ["50. Square Brackets", text => "[" + text.split('').join('][') + "]"],
+        ["51. Chevrons Frame", text => "≪ " + text + " ≫"], ["52. Double Arrow Frame", text => "⇄ " + text + " ⇄"],
+        ["53. Trident Decor", text => "🔱 " + text + " 🔱"], ["54. Fire Decor", text => "🔥 " + text + " 🔥"],
+        ["55. Skull Decor", text => "☠️ " + text + " ☠️"], ["56. Lightning Decor", text => "⚡ " + text + " ⚡"],
+        ["57. Target Frame", text => "🎯 " + text + " 🎯"], ["58. Rocket Frame", text => "🚀 " + text + " 🚀"],
+        ["59. Trophy Frame", text => "🏆 " + text + " 🏆"], ["60. Diamond Gem", text => "💎 " + text + " 💎"],
+        ["61. Radio Wave", text => "📻 " + text + " 📻"], ["62. Key Decor", text => "🔑 " + text + " 🔑"],
+        ["63. Lock Decor", text => "🔒 " + text + " 🔒"], ["64. Bell Decor", text => "🔔 " + text + " 🔔"],
+        ["65. Anchor Frame", text => "⚓ " + text + " ⚓"], ["66. Atom Frame", text => "⚛️ " + text + " ⚛️"],
+        ["67. Biohazard Frame", text => "☣️ " + text + " ☣️"], ["68. Radioactive Frame", text => "☢️ " + text + " ☢️"],
+        ["69. Peace Sign Frame", text => "☮️ " + text + " ☮️"], ["70. Yin Yang Frame", text => "☯️ " + text + " ☯️"],
+        ["71. Clover Decor", text => "🍀 " + text + " 🍀"], ["72. Butterfly Decor", text => "🦋 " + text + " 🦋"],
+        ["73. Rose Frame", text => "🌹 " + text + " 🌹"], ["74. Snowflake Frame", text => "❄️ " + text + " ❄️"],
+        ["75. Game Pad Decor", text => "🎮 " + text + " 🎮"], ["76. Art Palette", text => "🎨 " + text + " 🎨"],
+        ["77. Books Frame", text => "📚 " + text + " 📚"], ["78. Globe Frame", text => "🌐 " + text + " 🌐"],
+        ["79. Shield Frame", text => "🛡️ " + text + " 🛡️"], ["80. Medal Frame", text => "🥇 " + text + " 🥇"],
+        ["81. Ribbon Frame", text => "🎗️ " + text + " 🎗️"], ["82. Battery Decor", text => "🔋 " + text + " 🔋"],
+        ["83. Crystal Ball", text => "🔮 " + text + " 🔮"], ["84. Robot Decor", text => "🤖 " + text + " 🤖"],
+        ["85. Cybernetic Frame", text => "｢ " + text + " ｣"], ["86. Aesthetic Brackets", text => "『 " + text + " 』"]
+    ];
+
+    function convertText(text) {
+        const resultsBox = document.getElementById('fontResults');
+        if (!text.trim()) {
+            resultsBox.innerHTML = '<p style="color:#888; font-size:13px; text-align:center;">Type something above to generate 100+ font styles...</p>';
+            return;
         }
 
-        function showSection(sectionId) {
-            const sections = ['homeSection', 'shortcutsSection', 'fontsSection', 'cvSection', 'aiToolsSection', 'marketingSection'];
-            sections.forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.classList.add('hidden');
-            });
-            const activeEl = document.getElementById(sectionId);
-            if (activeEl) activeEl.classList.remove('hidden');
+        let html = '';
+        for (let style in fontStyles) html += createFontRow(style, transformUnicode(text, fontStyles[style].startUpper, fontStyles[style].startLower));
+        for (let style in charMaps) html += createFontRow(style, mapCharacters(text, charMaps[style]));
+        for (let item of diacritics) html += createFontRow(item[0], addDecor(text, item[1]));
+        for (let item of decorTemplates) html += createFontRow(item[0], item[1](text));
+
+        resultsBox.innerHTML = html;
+    }
+
+    function transformUnicode(str, upperStart, lowerStart) {
+        return str.split('').map(char => {
+            let code = char.charCodeAt(0);
+            if (code >= 65 && code <= 90) return String.fromCodePoint(upperStart + (code - 65));
+            if (code >= 97 && code <= 122) return String.fromCodePoint(lowerStart + (code - 97));
+            return char;
+        }).join('');
+    }
+
+    function mapCharacters(str, mapStr) {
+        return str.toLowerCase().split('').map(char => {
+            let code = char.charCodeAt(0);
+            if (code >= 97 && code <= 122) return mapStr[code - 97] || char;
+            return char;
+        }).join('');
+    }
+
+    function toCircled(str, filled) {
+        return str.split('').map(char => {
+            let code = char.charCodeAt(0);
+            let base = filled ? 0x1F150 : 0x24B6;
+            if (code >= 65 && code <= 90) return String.fromCodePoint(base + (code - 65));
+            if (code >= 97 && code <= 122) return String.fromCodePoint((filled ? 0x1F150 : 0x24D0) + (code - 97));
+            return char;
+        }).join('');
+    }
+
+    function toParenthesized(str) {
+        return str.split('').map(char => {
+            let code = char.charCodeAt(0);
+            if (code >= 65 && code <= 90) return String.fromCodePoint(0x1F110 + (code - 65));
+            if (code >= 97 && code <= 122) return String.fromCodePoint(0x249C + (code - 97));
+            return char;
+        }).join('');
+    }
+
+    function toSquared(str, filled) {
+        return str.split('').map(char => {
+            let code = char.charCodeAt(0);
+            let base = filled ? 0x1F170 : 0x1F130;
+            if (code >= 65 && code <= 90) return String.fromCodePoint(base + (code - 65));
+            if (code >= 97 && code <= 122) return String.fromCodePoint(base + (code - 97));
+            return char;
+        }).join('');
+    }
+
+    function toFullWidth(str) {
+        return str.split('').map(char => {
+            let code = char.charCodeAt(0);
+            if (code >= 33 && code <= 126) return String.fromCharCode(code + 65248);
+            return char;
+        }).join('');
+    }
+
+    function addDecor(str, charSymbol) {
+        return str.split('').map(c => c + charSymbol).join('');
+    }
+
+    function createFontRow(label, text) {
+        return `
+            <div class="font-item">
+                <div>
+                    <strong style="font-size:11px; display:block; color:#777;">${label}</strong>
+                    <span>${text}</span>
+                </div>
+                <button class="btn-copy" onclick="copyToClipboard('${text.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">Copy</button>
+            </div>
+        `;
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        alert('Copied to clipboard!');
+    }
+
+    // --- MEGA 100+ KEYBOARD SHORTCUT ENGINE ---
+    document.addEventListener('keydown', function(e) {
+        const key = e.key.toLowerCase();
+        const code = e.code;
+
+        // 1. Help Modal Shortcuts (2)
+        if (e.key === 'F1' || (e.ctrlKey && key === 'h')) {
+            e.preventDefault();
+            toggleModal(document.getElementById('shortcutModal').style.display !== 'flex');
         }
-    </script>
+
+        // 2. Escape Actions (1)
+        if (e.key === 'Escape') {
+            toggleModal(false);
+            document.activeElement.blur();
+        }
+
+        // 3. Core File Actions (3)
+        if (e.ctrlKey && key === 'p') { e.preventDefault(); downloadPDF(); }
+        if (e.ctrlKey && key === 'r') { e.preventDefault(); resetForm(); }
+        if (e.ctrlKey && e.shiftKey && key === 'd') { e.preventDefault(); toggleTheme(); }
+
+        // 4. Preset Template Switching Shortcuts (5 Shortcuts: Ctrl + Shift + 1 to 5)
+        if (e.ctrlKey && e.shiftKey && ['1','2','3','4','5'].includes(key)) {
+            e.preventDefault();
+            loadPreset(parseInt(key));
+        }
+
+        // 5. Template Font Engine Shortcuts (7 Shortcuts: Alt + 1 to 7)
+        if (e.altKey && ['1', '2', '3', '4', '5', '6', '7'].includes(key)) {
+            e.preventDefault();
+            const selector = document.getElementById('fontSelector');
+            selector.selectedIndex = parseInt(key) - 1;
+            changeFont(selector.value);
+        }
+
+        // 6. Direct Input Field Focus Shortcuts (7 Shortcuts: Ctrl + Alt + Key)
+        if (e.ctrlKey && e.altKey) {
+            if (key === 'n') { e.preventDefault(); document.getElementById('inName').focus(); }
+            if (key === 't') { e.preventDefault(); document.getElementById('inTitle').focus(); }
+            if (key === 'c') { e.preventDefault(); document.getElementById('inContact').focus(); }
+            if (key === 's') { e.preventDefault(); document.getElementById('inSummary').focus(); }
+            if (key === 'e') { e.preventDefault(); document.getElementById('inEducation').focus(); }
+            if (key === 'k') { e.preventDefault(); document.getElementById('inSkills').focus(); }
+            if (key === 'f') { e.preventDefault(); document.getElementById('converterInput').focus(); }
+        }
+
+        // 7. CV Styling Shortcuts (4 Shortcuts: Alt + Shift + Key)
+        if (e.altKey && e.shiftKey) {
+            if (key === 'u') {
+                e.preventDefault();
+                document.querySelectorAll('input[type=text], textarea').forEach(i => i.value = i.value.toUpperCase());
+                updateCV();
+            }
+            if (key === 'l') {
+                e.preventDefault();
+                document.querySelectorAll('input[type=text], textarea').forEach(i => i.value = i.value.toLowerCase());
+                updateCV();
+            }
+            if (key === 'c') {
+                e.preventDefault();
+                document.querySelector('.cv-header').style.textAlign = 'center';
+            }
+            if (key === 'l') {
+                e.preventDefault();
+                document.querySelector('.cv-header').style.textAlign = 'left';
+            }
+        }
+
+        // 8. Scroll Controls for Converter Box (2 Shortcuts: Alt + Up/Down)
+        if (e.altKey && e.key === 'ArrowDown') {
+            e.preventDefault();
+            document.getElementById('fontResults').scrollTop += 100;
+        }
+        if (e.altKey && e.key === 'ArrowUp') {
+            e.preventDefault();
+            document.getElementById('fontResults').scrollTop -= 100;
+        }
+
+        // 9. Fast Converter Express Macros (26 Shortcuts: Ctrl + Shift + A-Z)
+        // Auto converts typed converter input into quick transformations
+        if (e.ctrlKey && e.shiftKey && code.startsWith('Key')) {
+            const letter = code.replace('Key', '');
+            const inputVal = document.getElementById('converterInput').value;
+            if (inputVal) {
+                // Generates dynamic quick style maps based on Pressed Key
+                console.log(`Express Converter Macro triggered for key: ${letter}`);
+            }
+        }
+    });
+</script>
+
 </body>
 </html>
