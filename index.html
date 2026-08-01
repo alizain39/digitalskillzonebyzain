@@ -962,6 +962,63 @@
             document.getElementById('pvSkills').innerText = document.getElementById('cvSkills').value || "Skills list...";
             document.getElementById('pvLang').innerText = document.getElementById('cvLang').value || "Languages...";
         }
+                document.getElementById('pvL').textContent = ...;
+    }
+
+    function togglePrivacyModal(show) {
+        document.getElementById('privacyModal')?.classList.toggle('hidden', !show);
+    }
+
+    function toggleContactModal(show) {
+        document.getElementById('contactModal')?.classList.toggle('hidden', !show);
+                    }
+        
     </script>
+    <!-- PRIVACY POLICY & CONTACT MODALS -->
+<div id="privacyModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+    <div class="glass-card bg-[#0d1424] max-w-2xl w-full max-h-[80vh] rounded-2xl border border-slate-700 p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-lg font-bold text-indigo-400 font-heading">Privacy Policy</h3>
+            <button onclick="togglePrivacyModal(false)" class="text-slate-400 hover:text-white text-xl font-bold cursor-pointer">&times;</button>
+        </div>
+        <div class="text-xs text-slate-300 space-y-3 overflow-y-auto pr-2 leading-relaxed font-sans">
+            <p>Welcome to <strong>Digital Marketing Zone By Zain</strong> (owned by <strong>Ali Zain</strong>). We respect your privacy and are committed to protecting your personal data.</p>
+            <h4 class="font-bold text-white text-sm">1. Client-Side Data Security</h4>
+            <p>All browser utilities offered on our platform process files locally within your client browser. We do not store, copy, or upload your personal images, documents, or data to any external server.</p>
+            <h4 class="font-bold text-white text-sm">2. Cookies & Advertising (Google AdSense)</h4>
+            <p>We use third-party advertising partners like Google AdSense to serve ads when you visit our website. These partners may use cookies to serve ads based on your visits to this or other websites.</p>
+            <h4 class="font-bold text-white text-sm">3. External Links</h4>
+            <p>Our website contains links to third-party tools and platforms. We are not responsible for the privacy practices or content of external sites.</p>
+        </div>
+        <div class="pt-3 border-t border-slate-800 flex justify-end">
+            <button onclick="togglePrivacyModal(false)" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="contactModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4">
+    <div class="glass-card bg-[#0d1424] max-w-md w-full rounded-2xl border border-slate-700 p-6 flex flex-col justify-between space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <h3 class="text-lg font-bold text-cyan-400 font-heading">Contact Owner</h3>
+            <button onclick="toggleContactModal(false)" class="text-slate-400 hover:text-white text-xl font-bold cursor-pointer">&times;</button>
+        </div>
+        <div class="text-xs text-slate-300 space-y-4 font-sans text-center">
+            <p>Have questions, feedback, or need help? Reach out to me directly on TikTok:</p>
+            <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 space-y-3 font-code">
+                <div class="flex items-center justify-center gap-2">
+                    <span class="text-slate-400">👤 Owner:</span>
+                    <span class="text-white font-bold">Ali Zain</span>
+                </div>
+                <a href="https://www.tiktok.com/@zainthegreat06" target="_blank" class="flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-cyan-500 hover:opacity-90 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition cursor-pointer">
+                    <span>🎵 Message on TikTok (@zainthegreat06)</span>
+                </a>
+            </div>
+        </div>
+        <div class="pt-3 border-t border-slate-800 flex justify-end">
+            <button onclick="toggleContactModal(false)" class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition cursor-pointer">Close</button>
+        </div>
+    </div>
+</div>
+    
 </body>
 </html>
